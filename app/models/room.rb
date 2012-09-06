@@ -1,3 +1,2 @@
-class Room < ActiveRecord::Base
-  has_many :rows
+class Room
 end

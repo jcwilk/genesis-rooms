@@ -1,32 +1,38 @@
 require 'spec_helper.rb'
 
-describe RoomsController do
-  let(:room){mock id: 10}
-  let(:row){mock id: 20}
+describe RoomsController, type: :controller do
+  let(:room_id) { 10 }
+  let(:room) { mock id: room_id }
 
   describe "show" do
-    describe "spots subresource" do
-      let(:room_response) do
-        visit "/rooms/#{room.id}.xml"
-        response
-      end
-      let(:parsed_response){Nokogiri::XML.parse response}
-      let(:spot_xpath){"//room/rows//row[@resource='true']"}
-      let(:parsed_spot){parsed_response.xpath spot_xpath}
+    def do_get
+      get :show, id: room_id
+    end
 
-      before do
-        room.spots << Factory.build(:spot)
-        spot.should_not be_new_record
-      end
+    before do
+      do_get
+    end
 
-      it "includes all the rows" do
-        response.body.should have_xpath("//room/rows//row[@resource='true'][.='http://example.com/rows/#{room.id}/")
-      end
+    describe "to a filled out room" do
+      describe "for a tile" do
+        let(:tile) { MultiJson.decode(response.body, symbolize_keys: true)[:room][:tiles][0] }
 
-      it "returns 200 if you follow the row resource link" do
-        link = Nokogiri::XML.parse(room_response).xpath("//room/rows//row[@resource='true']").text
-        visit link
-        response.code.should == 200
+        describe 'for the tilePos' do
+          subject { tile[:tilePos] }
+
+          its([:x]) { should be_a(Fixnum) }
+          its([:y]) { should be_a(Fixnum) }
+        end
+
+        describe 'components' do
+          subject { tile[:components] }
+
+          it { should be_an(Array) }
+
+          it 'should be full of strings' do
+            subject.map(&:class).uniq.should == [String]
+          end
+        end
       end
     end
   end
