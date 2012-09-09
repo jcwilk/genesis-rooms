@@ -1,5 +1,0 @@
-== Genesis - Rooms
-
-This is the rooms management and api for genesis style servers. It basically just serves room data, and eventually, lets you edit and create them.
-
-Not much to see here yet, but stay tuned!
