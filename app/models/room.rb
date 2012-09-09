@@ -59,7 +59,7 @@ class Room
   def tile_url
     URI::HTTP.build(
       host: RoomsApi::HOSTNAME,
-      port: RoomsApi::PORT,
+      port: RoomsApi::PUBLIC_PORT.to_i,
       path: ActionController::Base.helpers.image_path('tiles.png')
     ).to_s
   end

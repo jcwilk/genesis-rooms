@@ -10,7 +10,7 @@ if defined?(Bundler)
 end
 
 module RoomsApi
-  PORT = ENV['PORT'] || 3000
+  PUBLIC_PORT = ENV['PUBLIC_PORT'] || 3000
   HOSTNAME = ENV['HOSTNAME'] || 'localhost'
   class Application < Rails::Application
     # Settings in config/environments/* take precedence over those specified here.
