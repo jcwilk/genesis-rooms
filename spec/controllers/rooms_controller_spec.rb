@@ -16,6 +16,13 @@ describe RoomsController, type: :controller do
     describe "to a filled out room" do
       let(:room_json) { MultiJson.decode(response.body, symbolize_keys: true)[:room] }
 
+      describe "for the spawn" do
+        subject { room_json[:spawn] }
+
+        its([:x]) { should be_a(Fixnum)}
+        its([:y]) { should be_a(Fixnum)}
+      end
+
       describe "for each tile" do
         let(:tile) { room_json[:tiles].first }
 

@@ -40,6 +40,7 @@ class Room
     return {
       room: {
         tiles: tiles,
+        spawn: {x:32*6, y:32*5},
         tilemaps: [
           { 
             url: tile_url,
