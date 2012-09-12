@@ -3,6 +3,6 @@ class RoomsController < ApplicationController
   end
 
   def show
-    render json: Room.first.to_json
+    render json: Room.find(params[:id]).to_json
   end
 end
