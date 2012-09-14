@@ -23,6 +23,13 @@ describe RoomsController, type: :controller do
         its([:y]) { should be_a(Fixnum)}
       end
 
+      describe "for the tile_dimensions" do
+        subject { room_json[:tile_dimensions] }
+
+        its([:x]) { should be_a(Fixnum)}
+        its([:y]) { should be_a(Fixnum)}
+      end
+
       describe "for each tile" do
         let(:tile) { room_json[:tiles].first }
 

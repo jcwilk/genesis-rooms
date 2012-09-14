@@ -19,7 +19,7 @@ class Room
     (1...w).each do |x|
       (1...h).each do |y|
         tiles << {
-          components: ['grass'+((x*y*id.to_i)%4+1).floor.to_s],
+          components: ['grass'+(((x*y)**id.to_i)%4+1).floor.to_s],
           tilePos:    {x:x,y:y}
         }
       end
@@ -51,6 +51,7 @@ class Room
       room: {
         tiles: tiles,
         spawn: {x:32*w/2, y:32*h/2},
+        tile_dimensions: {x:32, y:32},
         tilemaps: [
           { 
             url: tile_url,
