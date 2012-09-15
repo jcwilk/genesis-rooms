@@ -1,80 +1,78 @@
 class Room
-  SAMPLE_WOOD_V1 = [0,1,6,43,43,7,4,5,8,9,14,38,39,15,12,13,24,17,22,46,47,23,20,21,24,41,41,41,41,41,41,27,24,41,41,41,41,41,41,21,24,41,41,41,41,41,41,27,26,41,41,41,41,41,41,29,32,33,34,35,35,34,36,37]
+  SAMPLE_WOOD_V1 = [0,1,6,43,43,7,4,5,8,9,14,38,39,15,12,13,24,17,22,40,41,23,20,21,24,45,45,45,45,45,45,27,24,45,45,45,45,45,45,21,24,45,45,45,45,45,45,27,26,45,45,45,45,45,45,29,32,33,34,35,35,34,36,37]
 
-  attr_accessor :id
+  attr_accessor :id, :tiles_csv, :w, :h, :filename, :tile_size,
+                :tilemap_tile_width, :tilemap_tile_height, :floor_index
 
   def self.find(_id)
-    new.tap {|r| r.id = _id }
+    #new.tap {|r| r.id = _id }
+    sample_wood
   end
 
-  def w
-    id.to_i % 12 + 4
-  end
-
-  def h
-    (id.to_f / 12).floor % 12 + 4
+  def self.sample_wood
+    new.tap do |r|
+      r.tiles_csv = SAMPLE_WOOD_V1
+      r.w = 8
+      r.h = 8
+      r.filename = 'lost_garden_walls_v1.png'
+      r.tile_size = 40
+      r.tilemap_tile_width = 8
+      r.tilemap_tile_height = 6
+      r.floor_index = 42
+    end
   end
 
   def to_json
-    tiles = []
-
-    (1...w).each do |x|
-      (1...h).each do |y|
-        tiles << {
-          components: ['grass'+(((x*y)**id.to_i)%4+1).floor.to_s],
-          tilePos:    {x:x,y:y}
-        }
-      end
-    end
-
-    (0..w).each do |x|
-      tiles << {
-        components: ['Solid','dirt'],
-        tilePos:    {x:x,y:0}
-      }
-      tiles << {
-        components: ['Solid','dirt'],
-        tilePos:    {x:x,y:h}
-      }
-    end
-
-    (1..h).each do |y|
-      tiles << {
-        components: ['Solid','dirt'],
-        tilePos:    {x:0,y:y}
-      }
-      tiles << {
-        components: ['Solid','dirt'],
-        tilePos:    {x:w,y:y}
-      }
-    end
-
-    return {
+    {
       room: {
         tiles: tiles,
-        spawn: {x:32*w/2, y:32*h/2},
-        tile_dimensions: {x:32, y:32},
+        spawn: {x:tile_size*w/2, y:tile_size*h/2},
+        tileDimensions: {x:tile_size, y:tile_size},
         tilemaps: [
           { 
             url: tile_url,
-            components: {
-              grass1: [0,0],
-              grass2: [1,0],
-              grass3: [2,0],
-              grass4: [3,0],
-              dirt: [8,0]
-            }
+            components: component_definitions
           }
         ]
       }
     }
   end
 
+  def component_definitions
+    i = 0
+    {}.tap do |cds|
+      (0...tilemap_tile_height).each do |y|
+        (0...tilemap_tile_width).each do |x|
+          cds[base_filename+'_'+i.to_s] = [x,y]
+          i+= 1
+        end
+      end
+    end
+  end
+
+  def tiles
+    i = 0
+
+    tiles_csv.map do |t|
+      {
+        tilePos: {x: i % w, y: i / w},
+        components: [base_filename+'_'+t.to_s]
+      }.tap do |tile|
+        tile[:components] << 'Solid' if t < floor_index
+        i+= 1
+      end
+    end
+  end
+
+  def base_filename
+    filename.gsub(/\.[^.]+$/,'')
+  end
+
   def tile_url
     URI::HTTP.build(
       host: RoomsApi::HOSTNAME,
       port: RoomsApi::PUBLIC_PORT.to_i,
-      path: ActionController::Base.helpers.image_path('tiles.png')
+      path: ActionController::Base.helpers.image_path(filename)
     ).to_s
   end
 end
