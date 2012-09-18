@@ -12,6 +12,7 @@ end
 module RoomsApi
   PUBLIC_PORT = ENV['PUBLIC_PORT'] || 3000
   HOSTNAME = ENV['HOSTNAME'] || 'localhost'
+  GENESIS_BASE_URL = ENV['GENESIS_BASE_URL'] || 'http://localhost:5000'
   class Application < Rails::Application
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration should go into files in config/initializers

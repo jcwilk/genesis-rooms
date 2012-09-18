@@ -30,7 +30,7 @@ RoomsApi::Application.routes.draw do
   #     resources :comments, :sales
   #     resource :seller
   #   end
-  resources :rooms, only: [:show]
+  resources :rooms, only: [:show, :index, :new, :create, :edit]
 
   # Sample resource route with more complex sub-resources
   #   resources :products do

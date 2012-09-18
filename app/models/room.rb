@@ -1,25 +1,38 @@
 class Room
+  include Mongoid::Document
+
   SAMPLE_WOOD_V1 = [0,1,6,43,43,7,4,5,8,9,14,38,39,15,12,13,24,17,22,40,41,23,20,21,24,45,45,45,45,45,45,27,24,45,45,45,45,45,45,21,24,45,45,45,45,45,45,27,26,45,45,45,45,45,45,29,32,33,34,35,35,34,36,37]
 
-  attr_accessor :id, :tiles_csv, :w, :h, :filename, :tile_size,
-                :tilemap_tile_width, :tilemap_tile_height, :floor_index
+  field :tiles_csv, type: String
+  field :w, type: Integer
 
-  def self.find(_id)
-    #new.tap {|r| r.id = _id }
+  #attr_accessor :id
+
+  delegate :filename, :tile_size, :tilemap_tile_width, :tilemap_tile_height,
+           :floor_index, to: :tileset
+
+  def self.new_with_defaults
     sample_wood
   end
 
   def self.sample_wood
     new.tap do |r|
+      r.id = 1
       r.tiles_csv = SAMPLE_WOOD_V1
       r.w = 8
-      r.h = 8
-      r.filename = 'lost_garden_walls_v1.png'
-      r.tile_size = 40
-      r.tilemap_tile_width = 8
-      r.tilemap_tile_height = 6
-      r.floor_index = 42
     end
+  end
+
+  def parsed_tiles_csv
+    JSON.parse(tiles_csv)
+  end
+
+  def h
+    ((parsed_tiles_csv.length+1)/w).to_i
+  end
+
+  def tileset
+    Tileset.new_with_defaults
   end
 
   def to_json
@@ -53,7 +66,7 @@ class Room
   def tiles
     i = 0
 
-    tiles_csv.map do |t|
+    parsed_tiles_csv.map do |t|
       {
         tilePos: {x: i % w, y: i / w},
         components: [base_filename+'_'+t.to_s]

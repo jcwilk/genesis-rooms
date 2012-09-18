@@ -1,0 +1,14 @@
+%h1 Rooms!
+%p= link_to 'new', new_room_path
+%table
+  %thead
+    %tr
+      %th Go to Genesis
+      %th JSON
+      %th copy
+  %tbody
+    - @rooms.each do |room|
+      %tr
+        %td= link_to room.id, genesis_rooms_url(room.id)
+        %td= link_to 'JSON', room_path(room.id)
+        %td= link_to 'copy', edit_room_path(room.id)
