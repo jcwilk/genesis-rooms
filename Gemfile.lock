@@ -1,3 +1,13 @@
+GIT
+  remote: git@github.com:mongoid/mongoid.git
+  revision: 8c18342d3c5a6fc1318604702d91ff8bc9eff269
+  specs:
+    mongoid (3.1.0)
+      activemodel (~> 3.1)
+      moped (~> 1.2)
+      origin (~> 1.0)
+      tzinfo (~> 0.3.22)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -67,11 +77,6 @@ GEM
       treetop (~> 1.4.8)
     method_source (0.8)
     mime-types (1.17.2)
-    mongoid (3.0.6)
-      activemodel (~> 3.1)
-      moped (~> 1.1)
-      origin (~> 1.0)
-      tzinfo (~> 0.3.22)
     moped (1.2.2)
     multi_json (1.1.0)
     origin (1.0.8)
@@ -152,7 +157,7 @@ DEPENDENCIES
   formtastic
   haml-rails
   jquery-rails
-  mongoid
+  mongoid!
   pg
   pry
   pry-nav
