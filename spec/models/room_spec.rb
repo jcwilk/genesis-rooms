@@ -1,22 +1,26 @@
 require 'spec_helper'
 
 describe Room do
-  let(:room) { Room.new }
+  let!(:room) { Room.new }
+  let!(:tileset) do
+    mock.tap {|t| room.stub(tileset: t) }
+  end
+
   subject { room }
 
   describe '#tiles' do
     subject { room.tiles }
 
-    context "with a filename of 'fudge_muffin.png'" do
-      before { room.stub(filename: 'fudge_muffin.png') }
+    context "with a tileset name of 'fudge_muffin'" do
+      before { tileset.stub(name: 'fudge_muffin') }
 
       context 'with a width of 2' do
         before do
           room.w = 2
         end
 
-        context 'with a floor_index of 1' do
-          before { room.stub(floor_index: 2) }
+        context 'with a floor_index of 2' do
+          before { tileset.stub(floor_index: 2) }
 
           context 'with a tiles_csv of [5,1,3,2]' do
             before { room.tiles_csv = [5,1,3,2] }
@@ -59,13 +63,13 @@ describe Room do
   describe '#component_definitions' do
     subject { room.component_definitions }
 
-    context 'with a tilemap of width 2 and height 2' do
+    context 'with a tileset width and height of 2' do
       before do
-        room.stub(tilemap_tile_width: 2,tilemap_tile_height: 2)
+        tileset.stub(tile_width: 2, tile_height: 2)
       end
 
-      context "with a filename of 'porkchop_sandwiches.gif'" do
-        before { room.stub(filename: 'porkchop_sandwiches.gif') }
+      context "with a tileset name of 'porkchop_sandwiches'" do
+        before { tileset.stub(name: 'porkchop_sandwiches') }
 
         its('keys.size') { should eql(4) }
         its(['porkchop_sandwiches_0']) { should == [0,0] }
@@ -81,7 +85,7 @@ describe Room do
 
     its(:w) { should eql(8) }
     its(:h) { should eql(8) }
-    its(:tile_size) { should eql(40) }
-    its(:filename) { should eql('lost_garden_walls_v1.png') }
+    its(:tileset_tile_size) { should eql(40) }
+    its(:tileset_name) { should eql('wood_v2') }
   end
 end

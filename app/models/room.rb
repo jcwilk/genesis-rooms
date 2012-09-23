@@ -79,7 +79,7 @@ class Room
     parsed_tiles_csv.map do |t|
       {
         tilePos: {x: i % w, y: i / w},
-        components: [components_from_tile_index(t)]
+        components: components_from_tile_index(t)
       }.tap { i+= 1 }
     end
   end

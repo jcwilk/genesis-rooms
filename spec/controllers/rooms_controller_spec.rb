@@ -2,10 +2,11 @@ require 'spec_helper.rb'
 
 describe RoomsController, type: :controller do
   let(:room_id) { 10 }
-  let(:room) { mock id: room_id }
+  let(:room) { Room.new_with_defaults }
 
   describe "show" do
     def do_get
+      Room.stub(:find).with(room_id.to_s).and_return(room)
       get :show, id: room_id
     end
 

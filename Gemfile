@@ -53,3 +53,8 @@ group :development, :test do
   gem 'pry'
   gem 'pry-nav'
 end
+
+group :test do
+  gem 'database_cleaner', require: false
+  gem 'spork'
+end
