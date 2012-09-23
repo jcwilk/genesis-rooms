@@ -1,0 +1,257 @@
+a {
+    color: #517d9b;
+    text-decoration: none;
+}
+a:hover {
+    color: #65859b;
+    text-decoration: underline;
+}
+#container {
+    text-align: center;
+    position: relative;
+    margin: 0 auto;
+    width: 90%;
+    height: 100%;
+    min-height: 600px;
+    min-width: 800px;
+    text-align: left;
+}
+
+nav {
+    position: relative;
+    height: 45px;
+    background-color: #ccc;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    margin-top: 10px;
+    margin-left: 1px;
+    border: 1px solid #eee;
+    }
+nav div {
+    display: inline-block;
+    margin: 5px;
+    margin-right: 0;
+    padding: 2px;
+    border: 1px solid #999;
+    border-radius: 7px;
+    background-color: #ddd
+}
+nav h1 {
+    float: right;
+    text-shadow: 1px 1px 1px #eee;
+    font-size: 1.8em;
+    font-weight: normal;
+    margin: 8px;
+}
+
+#cvsContainer  {
+    overflow: auto;
+    width: 100%;
+    min-height: 500px;
+    min-width: 800px;
+    background: #333 url("/images/kM/containerBG.png");
+    box-shadow: 0px 0px 15px 5px #111;
+    border: 1px solid #333;
+}
+#loadTileSheet {
+    display: none;
+    position: absolute;
+    left: 10px;
+    top: 40px;
+    width: 340px;
+    height: 180px;
+}
+#newTileMap {
+    display: none;
+    position: absolute;
+    left: 60px;
+    top: 40px;
+    width: 280px;
+    height: 150px;
+}
+#loadTileMap {
+    display: none;
+    position: absolute;
+    left: 90px;
+    top: 40px;
+    width: 340px;
+    height: 170px;
+}
+#saveTileMap {
+    display: none;
+    position: absolute;
+    left: 120px;
+    top: 40px;
+    width: 280px;
+    height: 200px;
+}
+canvas {
+    margin: 10px;
+    margin-left: 145px;
+    cursor: default;
+}
+footer {
+    text-align: center;
+    padding: 1em;
+    color: #ccc;
+}
+
+.note {
+    font-size: .7em;
+    font-weight: bold;
+    text-align: center;
+}
+.center {
+    text-align: center;
+}
+.control {
+    background: #ccc;
+    border-radius: 5px;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    border: 1px solid #ddd;
+    box-shadow: 0px 0px 5px #333;
+}
+
+legend {
+    border-bottom: 1px solid #333;
+    padding: 2px 7px;
+    font-size: 1.3em;
+    font-weight: bold;
+    text-shadow: 1px 1px #eee;
+    box-shadow: 0px 4px 3px -3px #fff;
+}
+
+#helpText {
+    position: absolute;
+    right: -40px;
+    top: 40px;
+    width: 300px;
+    height: 85%;
+    overflow-y: auto;
+}
+#helpText h1 {
+    border-bottom: 1px solid #333;
+    padding: 2px 7px;
+    font-size: 1.3em;
+    font-weight: bold;
+    text-shadow: 1px 1px #eee;
+    box-shadow: 0px 4px 3px -3px #fff;
+}
+#helpText p {
+    margin: 5px;
+}
+
+#tileLoader p {
+    margin-top: .5em;
+}
+#tileLoader legend {
+    width: 326px;
+}
+#tileLoader label {
+    display: inline-block;
+    width: 125px;
+    text-align: right;
+    padding-right: 5px;
+}
+#tileLoader input {
+    display: inline-block;
+    width: 190px;
+    margin-right: 5px;
+}
+#tileLoader #btnLoadTiles, #tileLoader #btnCancelLoad {
+    width: 90px;
+    margin-top: 5px;
+}
+
+#newTileMap p {
+    margin-top: .5em;
+}
+#newTileMap legend {
+    width: 266px;
+}
+#newTileMap label {
+    display: inline-block;
+    width: 120px;
+    text-align: right;
+    padding-right: 5px;
+}
+#newTileMap input {
+    display: inline-block;
+    width: 140px;
+    margin-right: 5px;
+}
+#newTileMap #btnCreateMap, #newTileMap #btnCancelMap {
+    width: 90px;
+    margin-top: 5px;
+}
+
+#loadTileMap p {
+    margin-top: .5em;
+}
+#loadTileMap legend {
+    width: 326px;
+}
+#loadTileMap label {
+    display: inline-block;
+    width: 125px;
+    text-align: right;
+    padding-right: 5px;
+}
+#loadTileMap input {
+    display: inline-block;
+    width: 190px;
+    margin-right: 5px;
+}
+#loadTileMap #btnLoadTileMap, #loadTileMap #btnCancelMapLoad {
+    width: 110px;
+    margin-top: 5px;
+}
+
+#saveTileMap legend {
+    width: 266px;
+}
+#saveTileMap label {
+    display: inline-block;
+    width: 120px;
+    text-align: right;
+    padding-right: 5px;
+}
+#saveTileMap textarea {
+    margin-left: 5px;
+}
+#saveTileMap #btnSaveMap, #saveTileMap #btnCancelSave {
+    width: 90px;
+    margin-top: 5px;
+}
+
+#tilePicker {
+    position: absolute;
+    left: 10px;
+    top: 61px;
+    width: 120px;
+    max-height: 80%;
+    overflow-y: auto;
+    text-align: center;
+    box-shadow: 0px 0px 3px #333 inset;
+}
+#tilePicker h1 {
+    border-bottom: 1px solid #333;
+    box-shadow: 0px 4px 3px -3px #fff;
+    font-size: 1em;
+    font-weight: bold;
+    text-shadow: 1px 1px #eee;
+    padding: 5px;
+    margin-bottom: 5px;
+}
+#tilePicker img {
+    border: 2px solid #333;
+    margin: 1px;
+}
+#tilePicker img.selectedTile {
+    border: 2px solid #75a9c7;
+}
+#tilePicker img.hoverTile {
+    border: 2px solid #9ab7c7;
+}
+

@@ -1,0 +1,77 @@
+<div id="container">
+    <nav id="nav">
+        <h1>Tile Map Editor</h1>
+        <div id="tile"></div>
+        <div id="file"></div>
+        <div id="options"></div>
+        <div id="help"></div>
+    </nav>
+    <section id="cvsContainer">
+        <section id="tilePicker" class="control">
+            <h1>Tile Picker</h1>
+        </section>
+    </section>
+    <section id="loadTileSheet" class="control">
+        <form id="tileLoader">
+            <legend>Load Tile Sheet</legend>
+            <p><label for="tileSheetFile">Select Image File:</label><input type="file" id="tileSheetFile" accept="image/*"></p>
+            <p><label for="tileWidth">Tile Width:</label><input type="number" id="tileWidth" min="1" max="128"></p>
+            <p><label for="tileHeight">Tile Height:</label><input type="number" id="tileHeight" min="1" max="128"></p>
+            <p class="note">Minimum: 1x1 | Maximum: 128x128</p>
+            <p class="center"><input type="button" id="btnCancelLoad" value="Cancel" onclick="kM.ui.resetDialog(document.getElementById('loadTileSheet'), document.getElementById('tileLoader'));">
+             <input type="button" id="btnLoadTiles" value="Load Tiles" onclick="kM.ui.loadTiles();"></p>
+        </form>
+    </section>
+    <section id="newTileMap" class="control">
+        <form id="mapCreator">
+            <legend>New Tile Map</legend>
+            <p><label for="mapWidth">Map Width:</label><input type="number" id="mapWidth" min="1"></p>
+            <p><label for="mapHeight">Map Height:</label><input type="number" id="mapHeight" min="1"></p>
+            <p class="note">Map width and height in tiles!</p>
+            <p class="center"><input type="button" id="btnCancelMap" value="Cancel" onclick="kM.ui.resetDialog(document.getElementById('newTileMap'), document.getElementById('mapCreator'));">
+             <input type="button" id="btnCreateMap" value="Create Map" onclick="kM.ui.createMap();"></p>
+        </form>
+    </section>
+    <section id="loadTileMap" class="control">
+        <form id="mapLoader">
+            <legend>Load Tile Map</legend>
+            <p><label for="tileMapFile">Select JSON File:</label><input type="file" id="tileMapFile"></p>
+            <p><label for="loadWidth">Map Width:</label><input type="number" id="loadWidth" min="1"></p>
+            <p><label for="loadHeight">Map Height:</label><input type="number" id="loadHeight" min="1"></p>
+            <p class="center"><input type="button" id="btnCancelMapLoad" value="Cancel" onclick="kM.ui.resetDialog(document.getElementById('loadTileMap'), document.getElementById('mapLoader'));">
+             <input type="button" id="btnLoadTileMap" value="Load Tile Map" onclick="kM.ui.loadTileMap();"></p>
+        </form>
+    </section>
+    <section id="saveTileMap" class="control">
+        <form id="mapSaver">
+            <legend>Save Tile Map</legend>
+            <p><label for="mapData">JSON Data:</label><textarea id="mapData" rows="7" cols="32"></textarea></p>
+            <p class="center"><input type="button" id="btnCancelSave" value="Cancel" onclick="kM.ui.resetDialog(document.getElementById('saveTileMap'), document.getElementById('mapSaver'));">
+             <input type="button" id="btnSaveMap" value="Save Map" onclick="kM.ui.saveMap();"></p>
+        </form>
+    </section>
+    <section id="helpText" class="control">
+        <h1>Help</h1>
+        <p>To start, click the <em>Load Tile Sheet</em> button. This shows a dialog for you to provide the image to use for tiles.</p>
+        <p>Specify the width and height of a tile in pixels, then click <em>Load Tiles</em> and the tile sheet will be loaded and separated into tiles.</p>
+        <hr>
+        <p>Once a tile sheet is loaded, you will see the tiles in the workspace inside the <em>Tile Picker</em>. Clicking a tile image will select it for use on a tile map.</p>
+        <p>To create a new tile map, click the <em>New Tile Map</em> button. This shows a dialog where the width and height (in tiles) are needed to create a new tile map.</p>
+        <p>The default tile for new tile maps is tile 0. If you want to start with a transparent background, make sure your first tile is empty.</p>
+        <p>If you have a tile map already, you can load it by clicking the <em>Open Tile Map</em> button. This shows a dialog for you to provide the text file with saved CSV data as well as the dimensions to use.</p>
+        <hr>
+        <p>To edit your background, select a tile by clicking your choice in the <em>Tile Picker</em> and clicking anywhere within the background outlined in the workspace to place the selected tile.</p>
+        <p>If you load a different tile sheet, the current tile map will still be displayed but it will use the new tile images. This allows you to update and reload your tiles while you are working on the map.</p>
+        <p>By default, a grid is displayed to aid in tile placement. This grid may be toggled by clicking the <em>Toggle Grid</em> button.</p>
+        <hr>
+        <p>Once you have created the background you want, click the <em>Save Tile Map</em> button. This shows a dialog with the CSV values of the tile map, with an option to save as JSON.</p>
+    </section>
+    <footer>
+        <p>Copyright &copy; 2012 Matt Ross. 
+            <a rel="license" href="http://creativecommons.org/licenses/by-sa/3.0/us/" target="_blank">
+            Licensed under Creative Commons <img alt="Creative Commons License" style="border-width:0; vertical-align:text-bottom;"
+                 src="http://i.creativecommons.org/l/by-sa/3.0/us/80x15.png" /></a>
+            | Icons by <a href="http://p.yusukekamiyamane.com/" target="_blank">Yusuke Kamiyamane</a>.
+        </p>
+    </footer>
+</div>

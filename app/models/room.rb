@@ -8,8 +8,8 @@ class Room
 
   #attr_accessor :id
 
-  delegate :filename, :tile_size, :tilemap_tile_width, :tilemap_tile_height,
-           :floor_index, to: :tileset
+  delegate :url, :tile_size, :tile_width, :tile_height,
+           :floor_index, :name, to: :tileset, prefix: true
 
   def self.new_with_defaults
     sample_wood
@@ -39,11 +39,11 @@ class Room
     {
       room: {
         tiles: tiles,
-        spawn: {x:tile_size*w/2, y:tile_size*h/2},
-        tileDimensions: {x:tile_size, y:tile_size},
+        spawn: {x:tileset_tile_size*w/2, y:tileset_tile_size*h/2},
+        tileDimensions: {x:tileset_tile_size, y:tileset_tile_size},
         tilemaps: [
           { 
-            url: tile_url,
+            url: tileset_url,
             components: component_definitions
           }
         ]
@@ -51,12 +51,22 @@ class Room
     }
   end
 
+  def component_name_from_tile_index(tile_index)
+    tileset_name+'_'+tile_index.to_s
+  end
+
+  def components_from_tile_index(tile_index)
+    [component_name_from_tile_index(tile_index)].tap do |components|
+      components << 'Solid' if tile_index < tileset_floor_index
+    end
+  end
+
   def component_definitions
     i = 0
     {}.tap do |cds|
-      (0...tilemap_tile_height).each do |y|
-        (0...tilemap_tile_width).each do |x|
-          cds[base_filename+'_'+i.to_s] = [x,y]
+      (0...tileset_tile_height).each do |y|
+        (0...tileset_tile_width).each do |x|
+          cds[component_name_from_tile_index(i)] = [x,y]
           i+= 1
         end
       end
@@ -69,23 +79,12 @@ class Room
     parsed_tiles_csv.map do |t|
       {
         tilePos: {x: i % w, y: i / w},
-        components: [base_filename+'_'+t.to_s]
-      }.tap do |tile|
-        tile[:components] << 'Solid' if t < floor_index
-        i+= 1
-      end
+        components: [components_from_tile_index(t)]
+      }.tap { i+= 1 }
     end
   end
 
   def base_filename
-    filename.gsub(/\.[^.]+$/,'')
-  end
-
-  def tile_url
-    URI::HTTP.build(
-      host: RoomsApi::HOSTNAME,
-      port: RoomsApi::PUBLIC_PORT.to_i,
-      path: ActionController::Base.helpers.image_path(filename)
-    ).to_s
+    tileset_filename.gsub(/\.[^.]+$/,'')
   end
 end

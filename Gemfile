@@ -6,6 +6,7 @@ gem "haml-rails"
 gem 'formtastic'
 gem "mongoid", :git => "https://github.com/mongoid/mongoid.git"
 gem 'bson_ext'
+gem "jquery-rails"
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'

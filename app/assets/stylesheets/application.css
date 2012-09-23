@@ -8,9 +8,28 @@
  * You're free to add application-wide styles to this file and they'll appear at the top of the
  * compiled file, but it's generally better to create a new file per style scope.
  *
- *= require_self
- *= require_tree .
+ 
+ # *= require_tree .
  # app/assets/stylesheets/application.css
+ *= require html5reset.css
+ *= require kM.css
  *= require formtastic
+ *= require_self
 */
 
+td {
+  padding: 5px;
+  color: red;
+}
+
+h1 {
+  font-size: 3em;
+}
+
+h2 {
+  font-size: 2em;
+}
+
+h3 {
+  font-size: 1.5em;
+}

@@ -1,7 +1,40 @@
 = f.inputs do
-  = f.input :filename, label: 'Tileset', collection: Tileset.all
-  = f.input :w, label: 'Width'
-  = f.input :tiles_csv
-= f.actions do
-  = f.action :submit
-  = f.action :cancel
+  %li
+    = f.label :tileset_url, 'Tileset'
+    = f.select :tileset_url, options_for_select(Tileset.all.map{|t| [t.name,t.url]}), include_blank: true
+  %li
+    = f.label :w, 'Width'
+    = f.text_field :w
+  %li
+    = f.label :tiles_csv, 'Tilemap Data'
+    = f.text_area :tiles_csv, rows: 10, cols: 80, label: 'Room Data'
+  = f.actions do
+    = f.action :submit
+    = f.action :cancel
+
+  :javascript
+    $(window).load(function(){
+      initializeKM();
+
+      var tilesetSelect = document.getElementById('room_tileset_url');
+
+      tilesetSelect.onchange = function() {
+        var img = document.createElement("img");
+
+        img.src = tilesetSelect.value;
+        img.onload = function (){
+          kM.ui.toggleSection(tilePicker, true);
+          kM.ui.picker = new kM.TilePicker(
+            img,
+            40,
+            40,
+            document.getElementById("tilePicker")
+          );
+          kM.ui.btnNewMap.enable();
+          kM.ui.btnLoadMap.enable();
+        }
+      }
+
+      if(tilesetSelect.value) tilesetSelect.onchange();
+    })
+    
