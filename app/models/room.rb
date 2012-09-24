@@ -28,6 +28,8 @@ class Room
   end
 
   def h
+    return nil if tiles_csv.nil?
+    
     ((parsed_tiles_csv.length+1)/w).to_i
   end
 

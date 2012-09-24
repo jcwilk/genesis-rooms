@@ -1,3 +1,5 @@
 %h1 Copy Room!
 = semantic_form_for @room, url: rooms_path, html: {method: 'POST'} do |f|
   = render partial: 'form', locals: {f: f}
+
+= render partial: 'map_editor', locals: {room: @room}
