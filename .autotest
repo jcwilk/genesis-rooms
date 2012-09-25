@@ -1,5 +1,5 @@
 Autotest.add_hook :initialize do |at|
-  %w{log .git vendor spec/integration}.each do |exception|
+  %w{log .git vendor db}.each do |exception|
     at.add_exception(exception)
   end
 end

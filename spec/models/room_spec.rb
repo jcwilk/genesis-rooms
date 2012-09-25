@@ -1,18 +1,27 @@
 require 'spec_helper'
 
 describe Room do
-  let!(:room) { Room.new }
-  let!(:tileset) do
-    mock.tap {|t| room.stub(tileset: t) }
-  end
+  let(:tileset) { mock }
+  let(:room) { Room.new }
 
   subject { room }
 
+  def stub_tileset_find_by_name
+    Tileset.stub(:find_by_name).with(tileset_name).and_return(tileset)
+    tileset.stub(filename: tileset_name+'.png')
+  end
+
   describe '#tiles' do
+    let(:tileset_name) { 'fudge_muffin' }
+
+    before { stub_tileset_find_by_name }
+
     subject { room.tiles }
 
     context "with a tileset name of 'fudge_muffin'" do
-      before { tileset.stub(name: 'fudge_muffin') }
+      before do
+        room.tileset_name = tileset_name
+      end
 
       context 'with a width of 2' do
         before do
@@ -61,6 +70,10 @@ describe Room do
   end
 
   describe '#component_definitions' do
+    let(:tileset_name) { 'porkchop_sandwiches' }
+
+    before { stub_tileset_find_by_name }
+
     subject { room.component_definitions }
 
     context 'with a tileset width and height of 2' do
@@ -69,7 +82,7 @@ describe Room do
       end
 
       context "with a tileset name of 'porkchop_sandwiches'" do
-        before { tileset.stub(name: 'porkchop_sandwiches') }
+        before { room.tileset_name = 'porkchop_sandwiches' }
 
         its('keys.size') { should eql(4) }
         its(['porkchop_sandwiches_0']) { should == [0,0] }
@@ -86,6 +99,6 @@ describe Room do
     its(:w) { should eql(8) }
     its(:h) { should eql(8) }
     its(:tileset_tile_size) { should eql(40) }
-    its(:tileset_name) { should eql('wood_v2') }
+    its(:tileset_name) { should eql('lost_garden_walls_v2') }
   end
 end

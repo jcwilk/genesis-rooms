@@ -5,11 +5,11 @@ class Room
 
   field :tiles_csv, type: String
   field :w, type: Integer
-
-  #attr_accessor :id
+  field :tileset_name, type: String
+  attr_accessible :tiles_csv, :w, :tileset_name
 
   delegate :url, :tile_size, :tile_width, :tile_height,
-           :floor_index, :name, to: :tileset, prefix: true
+           :floor_index, to: :tileset, prefix: true
 
   def self.new_with_defaults
     sample_wood
@@ -20,6 +20,7 @@ class Room
       r.id = 1
       r.tiles_csv = SAMPLE_WOOD_V1
       r.w = 8
+      r.tileset_name = Tileset.new_with_defaults.name
     end
   end
 
@@ -29,12 +30,12 @@ class Room
 
   def h
     return nil if tiles_csv.nil?
-    
+
     ((parsed_tiles_csv.length+1)/w).to_i
   end
 
   def tileset
-    Tileset.new_with_defaults
+    Tileset.find_by_name(tileset_name)
   end
 
   def to_json
