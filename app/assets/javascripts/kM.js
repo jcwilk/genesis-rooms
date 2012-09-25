@@ -6,7 +6,7 @@
  * See http://creativecommons.org/licenses/by-sa/3.0/ for details.
  */
 
-initializeKM = function(){
+initializeKM = function(mapDataFormId){
 (function (window, undefined) {
     "use strict";
 
@@ -513,6 +513,7 @@ initializeKM = function(){
         //genesis stuff
         mapData = document.getElementById("room_tiles_csv"),
         formMapWidth = document.getElementById("room_w"),
+        mapDataForm = document.getElementById(mapDataFormId),
 
         disableNav = function () {
             var l = navButtons.length;
@@ -627,7 +628,7 @@ initializeKM = function(){
 
             kM.ui.resetDialog(loadTileSheet, tileLoader);
             kM.ui.btnNewMap.enable();
-            kM.ui.btnLoadMap.enable();
+            //kM.ui.btnLoadMap.enable();
         };
 
         reader.onload = function (e) {
@@ -783,26 +784,27 @@ initializeKM = function(){
             mapWidth.focus();
         });
 
-    kM.ui.btnLoadMap = new kM.Button({parent: file,
-                                        img: "/images/kM/open.png",
-                                        alt: "Load Tile Map"});
-    kM.ui.btnLoadMap.addEventListener(
-        function () {
-            kM.ui.toggleSection(loadTileMap);
-            disableNav();
-            tileMapFile.focus();
-        });
+    // kM.ui.btnLoadMap = new kM.Button({parent: file,
+    //                                     img: "/images/kM/open.png",
+    //                                     alt: "Load Tile Map"});
+    // kM.ui.btnLoadMap.addEventListener(
+    //     function () {
+    //         kM.ui.toggleSection(loadTileMap);
+    //         disableNav();
+    //         tileMapFile.focus();
+    //     });
 
     kM.ui.btnSaveMap = new kM.Button({parent: file,
                                         img: "/images/kM/save.png",
                                         alt: "Save Tile Map"});
     kM.ui.btnSaveMap.addEventListener(
         function () {
-            mapData.textContent = JSON.stringify(kM.ui.tileMap.getTileMap());
+            mapData.value = JSON.stringify(kM.ui.tileMap.getTileMap());
             //kM.ui.toggleSection(saveTileMap);
             //disableNav();
-            mapData.focus();
-            mapData.select();
+            //mapData.focus();
+            //mapData.select();
+            mapDataForm.submit();
         });
 
     kM.ui.btnHelp = new kM.Button({parent: help,
@@ -835,7 +837,7 @@ initializeKM = function(){
     // Help is not added here because it never needs to be disabled.
     navButtons.push(kM.ui.btnLoadTiles);
     navButtons.push(kM.ui.btnNewMap);
-    navButtons.push(kM.ui.btnLoadMap);
+    //navButtons.push(kM.ui.btnLoadMap);
     navButtons.push(kM.ui.btnSaveMap);
     navButtons.push(kM.ui.btnGridToggle);
     navButtons.push(kM.ui.btnClearMap);
@@ -859,13 +861,12 @@ initializeKM = function(){
 
     // Disable buttons
     kM.ui.btnNewMap.disable();
-    kM.ui.btnLoadMap.disable();
+    //kM.ui.btnLoadMap.disable();
     kM.ui.btnSaveMap.disable();
     kM.ui.btnGridToggle.disable();
     kM.ui.btnClearMap.disable();
 
-    document.body.style.visibility = "visible";
-
+    document.getElementById('container').style.visibility = "visible";
 })(kM);
 
 // Export kM to the global window object.

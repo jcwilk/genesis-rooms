@@ -18,6 +18,14 @@ class Tileset
     end
   end
 
+  def self.url_map
+    {}.tap do |m|
+      all.each do |t|
+        m[t.name] = t.url
+      end
+    end
+  end
+
   def self.new_with_defaults
     lost_garden_walls_v2
   end
