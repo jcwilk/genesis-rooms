@@ -11,8 +11,6 @@
 
   :javascript
     $(window).load(function(){
-
-
       var tilesetSizeMap = JSON.parse(#{Tileset.size_map.to_json.inspect});
       var tilesetUrlMap = JSON.parse(#{Tileset.url_map.to_json.inspect});
 
@@ -46,7 +44,6 @@
           }
         } else {
           for(var name in tilesetUrlMap){
-            console.log(tilesetUrlMap);
             if(tilesetUrlMap.hasOwnProperty(name)){
               var url = tilesetUrlMap[name];
               $(document.createElement("img"))
