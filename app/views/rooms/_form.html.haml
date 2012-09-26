@@ -47,8 +47,10 @@
             if(tilesetUrlMap.hasOwnProperty(name)){
               var url = tilesetUrlMap[name];
               $(document.createElement("img"))
-                .attr({src: url, 'data-tileset-name': name})
+                .attr({src: url, 'data-tileset-name': name, class: 'image-selector'})
                 .appendTo($('#image-selectors'))
+                .pShadow()
+                .pShadow({type: 'middle'})
                 .click(function(){
                   $('#image-selectors').empty();
             

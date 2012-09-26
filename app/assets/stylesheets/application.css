@@ -17,6 +17,10 @@
  *= require_self
 */
 
+body, html {
+  background-color: #EEE;
+}
+
 td {
   padding: 5px;
   color: red;
@@ -32,4 +36,11 @@ h2 {
 
 h3 {
   font-size: 1.5em;
+}
+
+img.image-selector {
+  padding: 2px;
+  border: 1px solid black;
+  margin: 5px;
+  background: white;
 }

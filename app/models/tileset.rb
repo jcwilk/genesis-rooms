@@ -3,7 +3,7 @@ class Tileset
                 :tile_height, :floor_index
 
   def self.all
-    [lost_garden_walls_v2,water_and_ice_v2]
+    [nethack_v1,lost_garden_walls_v2,water_and_ice_v2]
   end
 
   def self.find_by_name(name)
@@ -53,6 +53,16 @@ class Tileset
       r.tile_width = 16
       r.tile_height = 12
       r.floor_index = 180
+    end
+  end
+
+  def self.nethack_v1
+    new.tap do |r|
+      r.filename = 'nethack_v1.png'
+      r.tile_size = 32
+      r.tile_width = 10
+      r.tile_height = 12
+      r.floor_index = 98
     end
   end
 

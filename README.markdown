@@ -17,6 +17,7 @@ Not much to see here yet, but stay tuned!
 * First and foremost, deepest gratitude to the creators of all the gems listed in Gemfile
 * Matt Ross for his excellent [tilemap editor](http://www.ludumdare.com/compo/2012/05/04/javascript-tile-map-editor/)
 * Daniel Cook from [Lost Garden](http://www.lostgarden.com) for his gorgeous tilesets
+* Nethack for their excellent 32x32 tileset
 
 ### License ###
 
