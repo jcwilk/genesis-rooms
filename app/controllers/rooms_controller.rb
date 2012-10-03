@@ -1,6 +1,8 @@
 class RoomsController < ApplicationController
+  caches_page :merged_image, expires_in: 5.minutes
+
   def index
-    @rooms = Room.all.reverse
+    @rooms = Room.desc(:id).page(params[:page]).per(10)
   end
 
   def new
@@ -18,6 +20,12 @@ class RoomsController < ApplicationController
 
   def show
     render json: Room.find(params[:id]).to_json
+  end
+
+  def merged_image
+    img = Room.find(params[:id]).to_merged_image
+    response.headers["Content-type"] = img.mime_type
+    render :text => img.to_blob
   end
 
   private

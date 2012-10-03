@@ -94,11 +94,47 @@ describe Room do
   end
 
   describe 'for the sample_wood example' do
-    subject { Room.sample_wood }
+    let(:room) { Room.sample_wood }
+
+    subject { room }
 
     its(:w) { should eql(8) }
     its(:h) { should eql(8) }
     its(:tileset_tile_size) { should eql(40) }
     its(:tileset_name) { should eql('lost_garden_walls_v2') }
+
+    describe 'for the merged image' do
+      subject { room.to_merged_image }
+
+      it 'should be 320 pixels wide' do
+        subject.columns.should eql(320)
+      end
+
+      it 'should be 320 pixels tall' do
+        subject.columns.should eql(320)
+      end
+
+      its(:format) { should == 'JPG' }
+    end
+  end
+
+  describe '#tile_index_from_component_name' do
+    before { room.tileset_name = 'some_name' }
+
+    subject { room.tile_index_from_component_name(component_name) }
+
+    context 'with a valid name' do
+      let(:component_name) { 'some_name_6' }
+
+      it { should eql(6) }
+    end
+
+    context 'with a valid name' do
+      let(:component_name) { 'bogus_6' }
+
+      it 'raises arg error' do
+        expect { subject }.to raise_error(ArgumentError)
+      end
+    end
   end
 end

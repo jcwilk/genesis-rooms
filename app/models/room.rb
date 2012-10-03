@@ -1,6 +1,11 @@
 class Room
   include Mongoid::Document
 
+  include Kaminari::MongoidExtension::Criteria
+  include Kaminari::MongoidExtension::Document
+
+  include Magick
+
   SAMPLE_WOOD_V1 = [0,1,6,43,43,7,4,5,8,9,14,38,39,15,12,13,24,17,22,40,41,23,20,21,24,45,45,45,45,45,45,27,24,45,45,45,45,45,45,21,24,45,45,45,45,45,45,27,26,45,45,45,45,45,45,29,32,33,34,35,35,34,36,37]
 
   field :tiles_csv, type: String
@@ -9,7 +14,7 @@ class Room
   attr_accessible :tiles_csv, :w, :tileset_name
 
   delegate :url, :tile_size, :tile_width, :tile_height,
-           :floor_index, to: :tileset, prefix: true
+           :floor_index, :filename, to: :tileset, prefix: true
 
   def self.new_with_defaults
     sample_wood
@@ -54,6 +59,34 @@ class Room
     }
   end
 
+  def to_merged_image
+    tileset_image = Image.read( File.join( Rails.root,'app/assets/images',tileset_filename ) ).first
+    tile_array = tiles
+    ImageList.new.tap {|full_room|
+      h.times do
+        full_room << ImageList.new.tap {|il|
+          w.times do
+            tile = tile_array.shift
+            tile_index = tile_index_from_component_name(tile[:components].first)
+            tile_x = tile_index % tileset_tile_width
+            tile_y = tile_index / tileset_tile_width
+            il << tileset_image.crop(
+              tile_x*tileset_tile_size,
+              tile_y*tileset_tile_size,
+              tileset_tile_size,
+              tileset_tile_size,
+              true
+            )
+          end
+        }.append(false)
+      end
+    }.append(true).tap {|i| i.format = merged_image_format.to_s }
+  end
+
+  def merged_image_format
+    :jpg
+  end
+
   def component_name_from_tile_index(tile_index)
     tileset_name+'_'+tile_index.to_s
   end
@@ -62,6 +95,14 @@ class Room
     [component_name_from_tile_index(tile_index)].tap do |components|
       components << 'Solid' if tile_index < tileset_floor_index
     end
+  end
+
+  def tile_index_from_component_name(component_name)
+    unless component_name =~ /^#{tileset_name}/
+      raise ArgumentError, "Invalid component name! Doesn't match tileset name."
+    end
+
+    component_name.split('_').last.to_i
   end
 
   def component_definitions
@@ -85,9 +126,5 @@ class Room
         components: components_from_tile_index(t)
       }.tap { i+= 1 }
     end
-  end
-
-  def base_filename
-    tileset_filename.gsub(/\.[^.]+$/,'')
   end
 end

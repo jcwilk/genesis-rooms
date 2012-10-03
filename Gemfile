@@ -7,6 +7,9 @@ gem 'formtastic'
 gem "mongoid", :git => "https://github.com/mongoid/mongoid.git"
 gem 'bson_ext'
 gem "jquery-rails"
+gem 'rmagick', '2.12.0', :require => 'RMagick'
+gem 'rack-cache', :require => 'rack/cache'
+gem 'kaminari'
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'

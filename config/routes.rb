@@ -30,7 +30,9 @@ RoomsApi::Application.routes.draw do
   #     resources :comments, :sales
   #     resource :seller
   #   end
-  resources :rooms, only: [:show, :index, :new, :create, :edit]
+  resources :rooms, only: [:show, :index, :new, :create, :edit] do
+    get :merged_image, on: :member
+  end
 
   # Sample resource route with more complex sub-resources
   #   resources :products do

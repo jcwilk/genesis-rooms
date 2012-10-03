@@ -1,14 +1,16 @@
 %h1 Rooms!
 %p= link_to 'new', new_room_path
+= paginate @rooms
 %table
   %thead
     %tr
       %th Go to Genesis
-      %th JSON
-      %th copy
+      %th Details
   %tbody
     - @rooms.each do |room|
       %tr
-        %td= link_to room.id, genesis_rooms_url(room.id)
-        %td= link_to 'JSON', room_path(room.id)
-        %td= link_to 'copy', edit_room_path(room.id)
+        %td= link_to image_tag(merged_image_room_path(room.id, format: room.merged_image_format)), genesis_rooms_url(room.id)
+        %td
+          %ul
+            %li= link_to 'View JSON', room_path(room.id)
+            %li= link_to 'Copy into New Map', edit_room_path(room.id)
